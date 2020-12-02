@@ -77,10 +77,11 @@ def check_validity2(_input) -> bool:
 
 
 def main(filepath: str = './data/raw/day2_input.txt', mp=False, _map=False):
-
-    inputs = get_data(filepath)
-
+    print('Start solution 1')
     start = time.time()
+    inputs = get_data(filepath)
+    elapsed_inputs = time.time() - start
+    print(f'Time for data prep: {elapsed_inputs}')
     if mp:  # time to multiprocess is 0.15400099754333496 seconds
         with Pool() as pool:
             res = pool.map(check_validity, inputs)
@@ -92,20 +93,26 @@ def main(filepath: str = './data/raw/day2_input.txt', mp=False, _map=False):
         res = []
         for x in inputs:
             res.append(check_validity(x))
-    end = time.time()
+    elapsed_total = time.time() - start
     print(f'Number of valid passwords: {sum(res)}')
-    print(f'Time with MP = {mp} and _map = {_map} was: {end-start}')
+    print(f'Solution 1 time with MP = {mp} and _map = {_map} was: {elapsed_total}\n')
 
 
 def main2(filepath: str = './data/raw/day2_input.txt'):
-
+    print('Start solution 2')
+    start = time.time()
     inputs = get_data(filepath)
+    elapsed_inputs = time.time() - start
+    print(f'Time for data prep: {elapsed_inputs}')
 
     res = map(check_validity2, inputs)
     print(f'Number of valid passwords for problem 2: {sum(res)}')
+    elapsed_total = time.time() - start
+    print(f'Solution 2 time was: {elapsed_total}\n')
 
 
 if __name__ == '__main__':
+    meta_start = time.time()
     # solution 1
     # main('./data/raw/day2_input.txt', mp=True, _map=False)
 
@@ -115,3 +122,5 @@ if __name__ == '__main__':
 
     # solution 2
     main2('./data/raw/day2_input.txt')
+    meta_elapsed = time.time() - meta_start
+    print(f'Total time was {meta_elapsed}')
