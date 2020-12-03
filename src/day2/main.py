@@ -4,9 +4,12 @@ from more_itertools import locate
 
 
 def get_data(filepath: str = './data/raw/dat2_input.txt'):
+    data = []
     with open(filepath, 'r') as f:
         lines = f.readlines()
-    return lines
+        for line in lines:
+            data.append(line.replace('\n', ''))
+    return data
 
 
 def extract_vars(_input: str) -> tuple:
@@ -94,8 +97,10 @@ def main(filepath: str = './data/raw/day2_input.txt', mp=False, _map=False):
         for x in inputs:
             res.append(check_validity(x))
     elapsed_total = time.time() - start
-    print(f'Number of valid passwords: {sum(res)}')
+    ans = sum(res)
+    print(f'Number of valid passwords: {ans}')
     print(f'Solution 1 time with MP = {mp} and _map = {_map} was: {elapsed_total}\n')
+    return ans
 
 
 def main2(filepath: str = './data/raw/day2_input.txt'):
@@ -106,9 +111,11 @@ def main2(filepath: str = './data/raw/day2_input.txt'):
     print(f'Time for data prep: {elapsed_inputs}')
 
     res = map(check_validity2, inputs)
-    print(f'Number of valid passwords for problem 2: {sum(res)}')
+    ans = sum(res)
+    print(f'Number of valid passwords for problem 2: {ans}')
     elapsed_total = time.time() - start
     print(f'Solution 2 time was: {elapsed_total}\n')
+    return ans
 
 
 if __name__ == '__main__':

@@ -31,11 +31,12 @@ def is_tree(_input: str) -> bool:
     :param _input: one of '.' or '#'
     :return: False/True
     """
-
+    if _input not in ['#', '.']:
+        raise ValueError('Unexpected argument passed.')
     return _input == '#'
 
 
-def check_row_part_1(row: str, row_id: int, delta_x: int = 3, delta_y: int = 1) -> bool:
+def check_row(row: str, row_id: int, delta_x: int = 3, delta_y: int = 1) -> bool:
     """
     For part 1 this takes one  row of the map and returns
     whether or not the coordinate in that row is a tree
@@ -66,7 +67,7 @@ def main(filepath: str = './data/raw/day3_sample.txt',
     ids = range(len(inputs))
     delta_xs = [delta_x for _ in range(len(inputs))]
     delta_ys = [delta_y for _ in range(len(inputs))]
-    res = map(check_row_part_1, inputs, ids, delta_xs, delta_ys)
+    res = map(check_row, inputs, ids, delta_xs, delta_ys)
     answer = sum(res)
     print(f'Number of trees encountered when moving '
           f'right {delta_x} and down {delta_y} is: {answer}')
