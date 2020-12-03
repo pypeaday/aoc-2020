@@ -1,3 +1,6 @@
+import numpy as np
+
+
 def get_data(filepath: str = './data/raw/day3_input.txt'):
     with open(filepath, 'r') as f:
         inputs = f.readlines()
@@ -65,7 +68,8 @@ def main(filepath: str = './data/raw/day3_sample.txt',
     delta_ys = [delta_y for _ in range(len(inputs))]
     res = map(check_row_part_1, inputs, ids, delta_xs, delta_ys)
     answer = sum(res)
-    print(f'Number of trees encountered is: {answer}')
+    print(f'Number of trees encountered when moving '
+          f'right {delta_x} and down {delta_y} is: {answer}')
     return answer
 
 
@@ -74,28 +78,18 @@ if __name__ == '__main__':
     filepath = './data/raw/day3_input.txt'
 
     # part 1
-    print('solution for part 1')
-    sol1 = main(filepath)
+    print('Solution for part 1')
+    main(filepath)
+    print('*'*24)
 
     # part 2
-    # 0
-    print('sub-solution for part 2 | 0')
-    sol2_0 = main(filepath, 1, 1)
+    print('Starting solution for part 2')
+    algorithm_config = get_data('./src/day3/algorithm_config.txt')
+    solution2_results = []
+    for algo in algorithm_config:
+        delta_x = int(algo.split(',')[0])
+        delta_y = int(algo.split(',')[1])
+        solution2_results.append(main(filepath, delta_x, delta_y))
 
-    # 1
-    # This is part 1
-
-    # 2
-    print('sub-solution for part 2 | 2')
-    sol2_2 = main(filepath, 5, 1)
-
-    # 3
-    print('sub-solution for part 2 | 3')
-    sol2_3 = main(filepath, 7, 1)
-
-    # 4
-    print('sub-solution for part 2 | 4')
-    sol2_4 = main(filepath, 1, 2)
-
-    result = sol1 * sol2_0 * sol2_2 * sol2_3 * sol2_4
-    print(f'solution for part 2 is: {result}')
+    sol2 = prod = np.prod(solution2_results)
+    print(f'Solution for part 2 is {sol2}')
