@@ -51,22 +51,51 @@ def check_row_part_1(row: str, row_id: int, delta_x: int = 3, delta_y: int = 1) 
     # check that this is actually a row to check
     if row_id % delta_y != 0:
         return False
-    raw_col_id = row_id * delta_x
+    raw_col_id = row_id // delta_y * delta_x
     col_id = get_col_index(raw_col_id, len(row))
     return is_tree(row[col_id])
 
 
-def main(filepath: str = './data/raw/day3_sample.txt'):
+def main(filepath: str = './data/raw/day3_sample.txt',
+         delta_x: int = 3,
+         delta_y: int = 1):
     inputs = get_data(filepath)
     ids = range(len(inputs))
-    res = map(check_row_part_1, inputs, ids)
-    print(f'Number of trees encountered for part 1 is: {sum(res)}')
+    delta_xs = [delta_x for _ in range(len(inputs))]
+    delta_ys = [delta_y for _ in range(len(inputs))]
+    res = map(check_row_part_1, inputs, ids, delta_xs, delta_ys)
+    answer = sum(res)
+    print(f'Number of trees encountered is: {answer}')
+    return answer
 
 
 if __name__ == '__main__':
-    # solution 1
     # filepath = './data/raw/day3_sample.txt'
     filepath = './data/raw/day3_input.txt'
 
     # part 1
-    main(filepath)
+    print('solution for part 1')
+    sol1 = main(filepath)
+
+    # part 2
+    # 0
+    print('sub-solution for part 2 | 0')
+    sol2_0 = main(filepath, 1, 1)
+
+    # 1
+    # This is part 1
+
+    # 2
+    print('sub-solution for part 2 | 2')
+    sol2_2 = main(filepath, 5, 1)
+
+    # 3
+    print('sub-solution for part 2 | 3')
+    sol2_3 = main(filepath, 7, 1)
+
+    # 4
+    print('sub-solution for part 2 | 4')
+    sol2_4 = main(filepath, 1, 2)
+
+    result = sol1 * sol2_0 * sol2_2 * sol2_3 * sol2_4
+    print(f'solution for part 2 is: {result}')
