@@ -1,6 +1,6 @@
 import pytest
 import os
-from src.day4.main import get_data, format_data, is_passport_valid, main, REQUIRED_KEYS, OPTIONAL_KEYS
+from src.day4.main import get_data, format_data, is_passport_valid, main, check_height, VALIDATION_SCHEMA
 
 
 os.chdir('..')  # we're in test/and need to be up one level
@@ -55,11 +55,33 @@ def test_is_passport_valid():
     inputs = get_data('./data/raw/day4_sample.txt')
     formatted_inputs = format_data(inputs)
 
-    assert is_passport_valid(formatted_inputs[0], REQUIRED_KEYS) is True
-    assert is_passport_valid(formatted_inputs[1], REQUIRED_KEYS) is False
-    assert is_passport_valid(formatted_inputs[2], REQUIRED_KEYS) is True
-    assert is_passport_valid(formatted_inputs[3], REQUIRED_KEYS) is False
+    assert is_passport_valid(formatted_inputs[0]) is True
+    assert is_passport_valid(formatted_inputs[1]) is False
+    assert is_passport_valid(formatted_inputs[2]) is True
+    assert is_passport_valid(formatted_inputs[3]) is False
+
+
+def test_is_passport_valid2():
+    inputs = get_data('./data/raw/day4_sample2.txt')
+    formatted_inputs = format_data(inputs)
+
+    assert is_passport_valid(formatted_inputs[0], VALIDATION_SCHEMA) is False
+    assert is_passport_valid(formatted_inputs[1], VALIDATION_SCHEMA) is False
+    assert is_passport_valid(formatted_inputs[2], VALIDATION_SCHEMA) is False
+    assert is_passport_valid(formatted_inputs[3], VALIDATION_SCHEMA) is False
+    assert is_passport_valid(formatted_inputs[4], VALIDATION_SCHEMA) is True
+    assert is_passport_valid(formatted_inputs[5], VALIDATION_SCHEMA) is True
+    assert is_passport_valid(formatted_inputs[6], VALIDATION_SCHEMA) is True
+    assert is_passport_valid(formatted_inputs[7], VALIDATION_SCHEMA) is True
+
+
+def test_check_height():
+    assert check_height('183cm') is True
+    assert check_height('194cm') is False
+    assert check_height('54in') is False
+    assert check_height('64in') is True
 
 
 def test_main():
     assert main('./data/raw/day4_sample.txt') == 2
+    assert main('./data/raw/day4_sample2.txt', True) == 4
