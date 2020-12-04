@@ -92,5 +92,10 @@ if __name__ == '__main__':
         delta_y = int(algo.split(',')[1])
         solution2_results.append(main(filepath, delta_x, delta_y))
 
-    sol2 = prod = np.prod(solution2_results)
+    # due to potential issues with numpy I opt for a simple approach
+    # sol2 = np.prod(solution2_results)
+    sol2 = 1
+    for n in solution2_results:
+        sol2 = sol2 * n
+
     print(f'Solution for part 2 is {sol2}')
