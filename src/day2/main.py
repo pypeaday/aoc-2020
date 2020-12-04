@@ -3,7 +3,7 @@ import time
 from more_itertools import locate
 
 
-def get_data(filepath: str = './data/raw/dat2_input.txt'):
+def get_data(filepath: str = './data/raw/dat2_sample.txt'):
     data = []
     with open(filepath, 'r') as f:
         lines = f.readlines()
@@ -79,7 +79,7 @@ def check_validity2(_input) -> bool:
     return bool(x0 in indices) ^ bool(x1 in indices)
 
 
-def main(filepath: str = './data/raw/day2_input.txt', mp=False, _map=False):
+def main(filepath: str = './data/raw/day2_sample.txt', mp=False, _map=False):
     print('Start solution 1')
     start = time.time()
     inputs = get_data(filepath)
@@ -103,7 +103,7 @@ def main(filepath: str = './data/raw/day2_input.txt', mp=False, _map=False):
     return ans
 
 
-def main2(filepath: str = './data/raw/day2_input.txt'):
+def main2(filepath: str = './data/raw/day2_sample.txt'):
     print('Start solution 2')
     start = time.time()
     inputs = get_data(filepath)

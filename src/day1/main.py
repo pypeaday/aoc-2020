@@ -2,7 +2,7 @@ from itertools import combinations
 import numpy as np
 
 
-def get_data(file: str = './data/raw/day1_input.txt') -> list:
+def get_data(file: str = './data/raw/day1_sample.txt') -> list:
     inputs = []
     with open(file, 'r') as f:
         lines = f.readlines()
@@ -15,7 +15,7 @@ def find_sum(ls: list, p: int, k: int) -> list:
     return [tup for tup in combinations(ls, p) if sum(tup) == k]
 
 
-def main(filepath: str = './data/raw/day1_input.txt',
+def main(filepath: str = './data/raw/day1_sample.txt',
          p: int = 2,
          k: int = 2020):
     _input_list = get_data(filepath)

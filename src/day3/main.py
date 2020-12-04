@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def get_data(filepath: str = './data/raw/day3_input.txt'):
+def get_data(filepath: str = './data/raw/day3_sample.txt'):
     with open(filepath, 'r') as f:
         inputs = f.readlines()
     # strip away the \n character
