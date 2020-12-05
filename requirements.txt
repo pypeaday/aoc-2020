@@ -2,4 +2,3 @@ more_itertools
 numpy == 1.19.3
 pytest
 cerberus
-pyyaml
