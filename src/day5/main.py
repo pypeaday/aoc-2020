@@ -86,8 +86,8 @@ def decode_id(_input: str) -> int:
     """
     num_ids = get_number_indices(len(_input))
     seats = [i for i in range(num_ids)]
-    for i in range(len(_input)):
-        seats = return_binary_split_result(seats, _input[i])
+    for _split in _input:
+        seats = return_binary_split_result(seats, _split)
 
     return seats[0]
 
