@@ -1,7 +1,7 @@
 import pytest
 import os
 from src.day5.main import (get_data, get_seat_id, get_number_indices, split_data, split_list,
-                           return_binary_split_result, decode_id)
+                           return_binary_split_result, decode_id, get_all_seat_coords, get_all_seat_ids)
 
 
 os.chdir('..')  # we're in test/and need to be up one level
@@ -65,4 +65,18 @@ def test_decode_id():
 
     assert decode_id(data[3][0]) == 14
     assert decode_id(data[3][1]) == 7
+
+
+def test_get_all_seat_coords():
+    all_coords = get_all_seat_coords(2, 1)
+    assert (0, 0) in all_coords
+    assert (1, 0) in all_coords
+
+
+def test_get_all_seat_ids():
+    all_ids = get_all_seat_ids(1, 0)
+    id1 = get_seat_id(0, 0)
+    id2 = get_seat_id(1, 0)
+    assert id1 in all_ids
+    assert id2 in all_ids
 

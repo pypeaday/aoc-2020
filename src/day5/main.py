@@ -1,3 +1,7 @@
+import itertools
+import numpy as np
+
+
 def get_data(filepath: str = './data/raw/day5_sample.txt') -> list:
     """
     Returns sorted list of inputs
@@ -88,7 +92,7 @@ def decode_id(_input: str) -> int:
     return seats[0]
 
 
-def main(filepath: str = './data/raw/day5_sample.txt') -> int:
+def main(filepath: str = './data/raw/day5_sample.txt') -> (list, tuple):
     inputs = get_data(filepath)
     data = split_data(inputs, 7, 3)
     # get all row ids
@@ -99,10 +103,60 @@ def main(filepath: str = './data/raw/day5_sample.txt') -> int:
     seat_ids_gen = map(get_seat_id, row_ids, col_ids)
     seat_ids = [x for x in seat_ids_gen]
 
-    return max(seat_ids)
+    return seat_ids, data[0]
+
+
+def get_all_seat_coords(num_rows: int, num_cols: int) -> list:
+    # get cartesian product to represent all seats
+    all_seat_coords = itertools.product(*[[x for x in range(num_rows)], [x for x in range(num_cols)]])
+    return list(all_seat_coords)
+
+
+def get_all_seat_ids(row_len: int = 7, col_len: int = 3) -> list:
+    """
+
+    :param row_len: number of characters used to decode row id
+        ex.  FBFBBFF is 7 characters
+    :param col_len: number of character usedto decode col id
+        ex. RLR is 3 characters
+    :return: list of possible seat ids based on get_seat_id
+    """
+
+    # calculate all possible seat ids
+    num_rows = get_number_indices(row_len)
+    num_cols = get_number_indices(col_len)
+    all_seat_coords = get_all_seat_coords(num_rows, num_cols)
+    all_ids = map(get_seat_id, [x[0] for x in all_seat_coords], [x[1] for x in all_seat_coords])
+    return list(all_ids)
+
+
+def post_main(seat_ids: list, one_input: str) -> int:
+    """
+    Takes the list of seat ids from main() from part 1
+    and finds our missing seat id
+    :param seat_ids: result of main
+    :param one_input: one example input to main() to get the
+        number of characters per row and col id decoding
+    :return: my seat id
+    """
+    row_len = len(one_input[0])
+    col_len = len(one_input[1])
+    all_seat_ids = get_all_seat_ids(row_len, col_len)
+    # find all missing seat ids
+    missing_ids = list(set(all_seat_ids) - set(seat_ids))
+
+    diff_ids = np.diff(missing_ids)
+    # numpy np.argwhere returns a list of lists basically
+    # so we have to index twice
+    _id = 1 + np.argwhere(diff_ids != 1)[0][0]
+    return missing_ids[_id]
 
 
 if __name__ == '__main__':
     # part 1
-    seat_id = main('./data/raw/day5_input.txt')
-    print(f'Max seat ID for part 1 is: {seat_id}')
+    seat_ids, example_input = main('./data/raw/day5_input.txt')
+    print(f'Max seat ID for part 1 is: {max(seat_ids)}')
+
+    # part 2:
+    my_seat_id = post_main(seat_ids, example_input)
+    print(f'My seat ID is {my_seat_id}')
