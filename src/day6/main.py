@@ -103,7 +103,7 @@ def get_intersection(_group: list) -> str:
     return reduce(_intersection, _group)
 
 
-def main2(filepath: str = './data/raw/dat6_sample.txt') -> int:
+def main2(filepath: str = './data/raw/day6_sample.txt') -> int:
     """
     Main function for solution 2 day 6. Takes input and calculates
     the sum of 'yes' answers per group then sums each of those counts
