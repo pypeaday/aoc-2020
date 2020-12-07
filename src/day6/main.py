@@ -1,7 +1,7 @@
 from functools import reduce
 
 
-def get_data(filepath: str = './data/raw/day6_sample.txt') -> (list, list):
+def get_data(filepath: str = './data/raw/day6_sample.txt') -> list:
     """
     Returns raw list of inputs having \n stripped away
     :param filepath:
