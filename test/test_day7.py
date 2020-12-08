@@ -1,6 +1,6 @@
 import pytest
 import os
-from src.day7.main import (get_data, can_bag_be_carried, main)
+from src.day7.main import (get_data, can_bag_be_carried, main, count_bag_capacity, count_all_bag_capacities_including_self)
 
 
 os.chdir('..')  # we're in test/and need to be up one level
@@ -41,3 +41,25 @@ def test_can_bag_be_carried():
 def test_main():
     res = main('./data/raw/day7_sample.txt', 'shiny gold')
     assert res == 4
+
+
+def test_count_all_bag_capacities():
+    rules2 = get_data('./data/raw/day7_sample2.txt')
+    sums = count_all_bag_capacities_including_self(rules2, dict())
+    assert sums['dark violet'] == 1
+    assert sums['dark blue'] == 3
+    assert sums['dark green'] == 7
+    assert sums['dark yellow'] == 15
+    assert sums['dark orange'] == 31
+    assert sums['dark red'] == 63
+    assert sums['shiny gold'] == 127
+
+
+def test_count_bag_capacity():
+    rules = get_data('./data/raw/day7_sample.txt')
+    sums = count_all_bag_capacities_including_self(rules, dict())
+    assert count_bag_capacity(sums, rules, 'shiny gold') == 32
+
+    rules2 = get_data('./data/raw/day7_sample2.txt')
+    sums2 = count_all_bag_capacities_including_self(rules2, dict())
+    assert count_bag_capacity(sums2, rules2, 'shiny gold') == 126

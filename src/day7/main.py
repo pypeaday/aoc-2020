@@ -77,7 +77,42 @@ def main(filepath: str = './data/raw/day7_sample.txt',
     return sum(results)
 
 
+def count_all_bag_capacities_including_self(rules: dict, sums: dict) -> dict:
+    for bag, rule in rules.items():
+        if bag in sums.keys():
+            continue
+        if rule[0] is None:
+            sums[bag] = 1
+        else:
+            if set(sums.keys()) != set() and set(rule).issubset(sums.keys()):  # ie. if every bag in the rule has a numeric value already
+                vals = [sums[k] for k in rule]
+                sums[bag] = sum(vals) + 1
+
+    if len(sums.keys()) == len(rules.keys()):
+        return sums
+    else:
+        return count_all_bag_capacities_including_self(rules, sums)
+
+
+def count_bag_capacity(sums: dict, rules: dict, bag: str) -> int:
+    """
+    Return the number of bags 'bag' can contain based on the rules from get_data()
+
+    :param sums: raw sub-bag count of each colored bag
+    :param rules: rules from get_data()
+    :param bag: colored bag to check the capacity of
+    :return:
+    """
+    return sum(sums[k] for k in rules[bag])
+
+
 if __name__ == '__main__':
     # solution 1
     res = main('./data/raw/day7_input.txt', 'shiny gold')
     print(f'Number of bags that can eventually hold my shiny gold bag are: {res}')
+
+    # solution 2
+    rules = get_data('./data/raw/day7_input.txt')
+    sums = count_all_bag_capacities_including_self(rules, dict())
+    ans = count_bag_capacity(sums, rules, 'shiny gold')
+    print(f'Number of bags that fit into my shiny gold bag are: {ans}')
