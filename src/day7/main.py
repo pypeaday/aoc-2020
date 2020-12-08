@@ -38,6 +38,8 @@ def get_data(filepath: str = './data/raw/day7_sample.txt') -> dict:
             # how many edge cases could there be
             else:
                 raise SystemError('Fix this get_data function because apparently hundreds of bags are an option')
+            # append duplicates of each possible bag in case number ever matters - we'll use set() later on to avoid
+            # unnecessary calculation
             _d[big_bag_color].extend([small_bag_color] * num)
 
     return _d
@@ -51,13 +53,16 @@ def can_bag_be_carried(rules: dict, outer_bag: str, inner_bag: str) -> bool:
     :param inner_bag:
     :return:
     """
-    if inner_bag in rules[outer_bag]:
+    inner_bags = set(rules[outer_bag])
+    if inner_bag in inner_bags:
         return True
     else:
-        results = []
-        for potential_bag in rules[outer_bag]:
-            results.append(can_bag_be_carried(rules, potential_bag, inner_bag))
-            return any(results)
+        results = map(can_bag_be_carried,
+                      [rules for _ in range(len(inner_bags))],
+                      inner_bags,
+                      [inner_bag for _ in range(len(inner_bags))])
+
+        return any(results)
 
 
 def main(filepath: str = './data/raw/day7_sample.txt',
@@ -67,8 +72,6 @@ def main(filepath: str = './data/raw/day7_sample.txt',
     results = []
     for big_bag in all_bags:
         results.append(can_bag_be_carried(rules, big_bag, my_bag))
-        # if any(results):
-        #     dummy = input()
 
     return sum(results)
 
