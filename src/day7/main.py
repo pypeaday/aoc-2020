@@ -69,9 +69,10 @@ def main(filepath: str = './data/raw/day7_sample.txt',
          my_bag: str = 'shiny gold'):
     rules = get_data(filepath)
     all_bags = [x for x in rules.keys()]
-    results = []
-    for big_bag in all_bags:
-        results.append(can_bag_be_carried(rules, big_bag, my_bag))
+    results = map(can_bag_be_carried,
+                  [rules for _ in range(len(all_bags))],
+                  all_bags,
+                  [my_bag for _ in range(len(all_bags))])
 
     return sum(results)
 
