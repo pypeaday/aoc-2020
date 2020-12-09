@@ -1,6 +1,6 @@
 import pytest
 import os
-from src.day9.main import get_data, is_valid, main 
+from src.day9.main import get_data, is_valid, main, main2
 
 
 def test_get_data():
@@ -47,5 +47,12 @@ def test_is_valid():
 
 
 def test_main():
-    res = main('./data/raw/day9_sample.txt', 5)
+    res, idx = main('./data/raw/day9_sample.txt', 5)
     assert res == 127
+
+
+def test_main2():
+    _ , idx = main('./data/raw/day9_sample.txt', 5)
+    res2 = main2('./data/raw/day9_sample.txt', 5, idx)
+    assert min(res2) == 15
+    assert max(res2) == 47
