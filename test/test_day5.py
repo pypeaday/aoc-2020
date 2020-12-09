@@ -4,9 +4,6 @@ from src.day5.main import (get_data, get_seat_id, get_number_indices, split_data
                            return_binary_split_result, decode_id, get_all_seat_coords, get_all_seat_ids)
 
 
-os.chdir('..')  # we're in test/and need to be up one level
-
-
 def test_get_data():
     inputs = get_data('./data/raw/day5_sample.txt')
 

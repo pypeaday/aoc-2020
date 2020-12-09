@@ -4,9 +4,6 @@ from src.day6.main import (get_data, format_data_part_1, format_data_part_2, get
                            main, main2)
 
 
-os.chdir('..')  # we're in test/and need to be up one level
-
-
 def test_get_data():
     raw_data = get_data('./data/raw/day6_sample.txt')
 

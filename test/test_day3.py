@@ -3,9 +3,6 @@ import os
 from src.day3.main import main, get_data, get_col_index, is_tree, check_row
 
 
-os.chdir('..')  # we're in test/and need to be up one level
-
-
 def test_get_data():
     inputs = get_data('./data/raw/day3_sample.txt')
 

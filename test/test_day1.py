@@ -3,9 +3,6 @@ import os
 from src.day1.main import get_data, find_sum, main
 
 
-os.chdir('..')  # we're in test/and need to be up one level
-
-
 def test_get_data():
     inputs = get_data('./data/raw/day1_sample.txt')
     assert inputs[0] == 1721

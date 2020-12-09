@@ -3,9 +3,6 @@ import os
 from src.day7.main import (get_data, can_bag_be_carried, main, count_bag_capacity, count_all_bag_capacities_including_self)
 
 
-os.chdir('..')  # we're in test/and need to be up one level
-
-
 def test_get_data():
     data = get_data('./data/raw/day7_sample.txt')
 

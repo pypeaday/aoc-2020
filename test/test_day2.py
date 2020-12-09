@@ -3,9 +3,6 @@ import os
 from src.day2.main import main, main2, get_data, extract_vars, extract_vars_pt2, check_validity, check_validity2
 
 
-os.chdir('..')  # we're in test/and need to be up one level
-
-
 def test_get_data():
     inputs = get_data('./data/raw/day2_sample.txt')
     assert inputs[0] == '1-3 a: abcde'

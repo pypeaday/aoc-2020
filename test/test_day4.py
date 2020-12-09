@@ -3,9 +3,6 @@ import os
 from src.day4.main import get_data, format_data, is_passport_valid, main, check_height, VALIDATION_SCHEMA
 
 
-os.chdir('..')  # we're in test/and need to be up one level
-
-
 def test_get_data():
     inputs = get_data('./data/raw/day4_sample.txt')
 

@@ -3,9 +3,6 @@ import os
 from src.day8.main import (BootLoader, get_raw_instructions, fix_instructions)
 
 
-os.chdir('..')  # we're in test/and need to be up one level
-
-
 def test_get_instructions():
     bootloader = BootLoader('./data/raw/day8_sample.txt')
     assert bootloader.instructions[0] == ('nop', 0)
