@@ -1,11 +1,11 @@
 import numpy as np
 
 
-def get_data(filepath: str = './data/raw/day3_sample.txt'):
-    with open(filepath, 'r') as f:
+def get_data(filepath: str = "./data/raw/day3_sample.txt"):
+    with open(filepath, "r") as f:
         inputs = f.readlines()
     # strip away the \n character
-    return [x.replace('\n', '') for x in inputs]
+    return [x.replace("\n", "") for x in inputs]
 
 
 def get_col_index(raw_col_id: int, num_cols: int = 11) -> int:
@@ -31,9 +31,9 @@ def is_tree(_input: str) -> bool:
     :param _input: one of '.' or '#'
     :return: False/True
     """
-    if _input not in ['#', '.']:
-        raise ValueError('Unexpected argument passed.')
-    return _input == '#'
+    if _input not in ["#", "."]:
+        raise ValueError("Unexpected argument passed.")
+    return _input == "#"
 
 
 def check_row(row: str, row_id: int, delta_x: int = 3, delta_y: int = 1) -> bool:
@@ -60,36 +60,38 @@ def check_row(row: str, row_id: int, delta_x: int = 3, delta_y: int = 1) -> bool
     return is_tree(row[col_id])
 
 
-def main(filepath: str = './data/raw/day3_sample.txt',
-         delta_x: int = 3,
-         delta_y: int = 1):
+def main(
+    filepath: str = "./data/raw/day3_sample.txt", delta_x: int = 3, delta_y: int = 1
+):
     inputs = get_data(filepath)
     ids = range(len(inputs))
     delta_xs = [delta_x for _ in range(len(inputs))]
     delta_ys = [delta_y for _ in range(len(inputs))]
     res = map(check_row, inputs, ids, delta_xs, delta_ys)
     answer = sum(res)
-    print(f'Number of trees encountered when moving '
-          f'right {delta_x} and down {delta_y} is: {answer}')
+    print(
+        f"Number of trees encountered when moving "
+        f"right {delta_x} and down {delta_y} is: {answer}"
+    )
     return answer
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # filepath = './data/raw/day3_sample.txt'
-    filepath = './data/raw/day3_input.txt'
+    filepath = "./data/raw/day3_input.txt"
 
     # part 1
-    print('Solution for part 1')
+    print("Solution for part 1")
     main(filepath)
-    print('*'*24)
+    print("*" * 24)
 
     # part 2
-    print('Starting solution for part 2')
-    algorithm_config = get_data('./src/day3/algorithm_config.txt')
+    print("Starting solution for part 2")
+    algorithm_config = get_data("./src/day3/algorithm_config.txt")
     solution2_results = []
     for algo in algorithm_config:
-        delta_x = int(algo.split(',')[0])
-        delta_y = int(algo.split(',')[1])
+        delta_x = int(algo.split(",")[0])
+        delta_y = int(algo.split(",")[1])
         solution2_results.append(main(filepath, delta_x, delta_y))
 
     # due to potential issues with numpy I opt for a simple approach
@@ -98,4 +100,4 @@ if __name__ == '__main__':
     for n in solution2_results:
         sol2 = sol2 * n
 
-    print(f'Solution for part 2 is {sol2}')
+    print(f"Solution for part 2 is {sol2}")

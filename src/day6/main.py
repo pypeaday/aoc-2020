@@ -1,17 +1,17 @@
 from functools import reduce
 
 
-def get_data(filepath: str = './data/raw/day6_sample.txt') -> list:
+def get_data(filepath: str = "./data/raw/day6_sample.txt") -> list:
     """
     Returns raw list of inputs having \n stripped away
     :param filepath:
     :return: lints of the data file in a list
     """
     data = []
-    with open(filepath, 'r') as f:
+    with open(filepath, "r") as f:
         lines = f.readlines()
         for line in lines:
-            data.append(line.replace('\n', ''))
+            data.append(line.replace("\n", ""))
 
     return data
 
@@ -23,16 +23,16 @@ def format_data_part_1(raw_data: list) -> list:
     :param raw_data: direct output of get_data
     :return:
     """
-    _data = ''
+    _data = ""
     inputs = []
     for line in raw_data:
-        if line == '':
+        if line == "":
             inputs.append(_data)
-            _data = ''
+            _data = ""
             _group_answers = []
         else:
-            _data += line.replace(' ', '')
-    if _data != '':
+            _data += line.replace(" ", "")
+    if _data != "":
         inputs.append(_data)
 
     return inputs
@@ -50,11 +50,11 @@ def format_data_part_2(raw_data: list) -> list:
     inputs = []
     _group_answers = []
     for line in raw_data:
-        if line == '':
+        if line == "":
             inputs.append(_group_answers)
             _group_answers = []
         else:
-            _group_answers.append(line.replace(' ', ''))
+            _group_answers.append(line.replace(" ", ""))
     if _group_answers:
         inputs.append(_group_answers)
 
@@ -73,7 +73,7 @@ def get_group_count(data: str) -> int:
     return len(set(data))
 
 
-def main(filepath: str = './data/raw/day6_sample.txt') -> int:
+def main(filepath: str = "./data/raw/day6_sample.txt") -> int:
     """
     Main function for solution 1 day 6. Takes input and calculates
     the sum of 'yes' answers per group then sums each of those counts
@@ -89,7 +89,7 @@ def main(filepath: str = './data/raw/day6_sample.txt') -> int:
 
 
 def _intersection(s1: str, s2: str) -> str:
-    return ''.join([x for x in set(s1).intersection(s2)])
+    return "".join([x for x in set(s1).intersection(s2)])
 
 
 def get_intersection(_group: list) -> str:
@@ -103,7 +103,7 @@ def get_intersection(_group: list) -> str:
     return reduce(_intersection, _group)
 
 
-def main2(filepath: str = './data/raw/day6_sample.txt') -> int:
+def main2(filepath: str = "./data/raw/day6_sample.txt") -> int:
     """
     Main function for solution 2 day 6. Takes input and calculates
     the sum of 'yes' answers per group then sums each of those counts
@@ -118,12 +118,11 @@ def main2(filepath: str = './data/raw/day6_sample.txt') -> int:
     return res
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # part 1
-    res = main('./data/raw/day6_input.txt')
+    res = main("./data/raw/day6_input.txt")
     print(f'The sum of the count per group of any "yes" answers is: {res}')
 
     # part 2
-    res = main2('./data/raw/day6_input.txt')
+    res = main2("./data/raw/day6_input.txt")
     print(f'The sum of the count per group of any "yes" answers is: {res}')
-

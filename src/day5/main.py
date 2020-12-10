@@ -1,16 +1,17 @@
 import itertools
 import numpy as np
+from typing import Tuple
 
 
-def get_data(filepath: str = './data/raw/day5_sample.txt') -> list:
+def get_data(filepath: str = "./data/raw/day5_sample.txt") -> list:
     """
     Returns sorted list of inputs
     :param filepath:
     :return:
     """
-    with open(filepath, 'r') as f:
+    with open(filepath, "r") as f:
         lines = f.readlines()
-    return sorted([x.replace('\n', '') for x in lines])
+    return sorted([x.replace("\n", "") for x in lines])
 
 
 def get_number_indices(n: int = 7) -> int:
@@ -67,12 +68,7 @@ def return_binary_split_result(_range: list, _split: str) -> list:
     # binary search will render list of 2 items, and
     # depending on looking for row or column the string
     # identifier for the lower or upper half is different.
-    bin_map = {
-        'B': 1,
-        'F': 0,
-        'L': 0,
-        'R': 1
-    }
+    bin_map = {"B": 1, "F": 0, "L": 0, "R": 1}
     # put it in a map here to share the function
     return split_list(_range)[bin_map[_split]]
 
@@ -92,7 +88,7 @@ def decode_id(_input: str) -> int:
     return seats[0]
 
 
-def main(filepath: str = './data/raw/day5_sample.txt') -> (list, tuple):
+def main(filepath: str = "./data/raw/day5_sample.txt") -> Tuple(list, tuple):
     inputs = get_data(filepath)
     data = split_data(inputs, 7, 3)
     # get all row ids
@@ -108,7 +104,9 @@ def main(filepath: str = './data/raw/day5_sample.txt') -> (list, tuple):
 
 def get_all_seat_coords(num_rows: int, num_cols: int) -> list:
     # get cartesian product to represent all seats
-    all_seat_coords = itertools.product(*[[x for x in range(num_rows)], [x for x in range(num_cols)]])
+    all_seat_coords = itertools.product(
+        *[[x for x in range(num_rows)], [x for x in range(num_cols)]]
+    )
     return list(all_seat_coords)
 
 
@@ -126,7 +124,9 @@ def get_all_seat_ids(row_len: int = 7, col_len: int = 3) -> list:
     num_rows = get_number_indices(row_len)
     num_cols = get_number_indices(col_len)
     all_seat_coords = get_all_seat_coords(num_rows, num_cols)
-    all_ids = map(get_seat_id, [x[0] for x in all_seat_coords], [x[1] for x in all_seat_coords])
+    all_ids = map(
+        get_seat_id, [x[0] for x in all_seat_coords], [x[1] for x in all_seat_coords]
+    )
     return list(all_ids)
 
 
@@ -152,11 +152,11 @@ def post_main(seat_ids: list, one_input: str) -> int:
     return missing_ids[_id]
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # part 1
-    seat_ids, example_input = main('./data/raw/day5_input.txt')
-    print(f'Max seat ID for part 1 is: {max(seat_ids)}')
+    seat_ids, example_input = main("./data/raw/day5_input.txt")
+    print(f"Max seat ID for part 1 is: {max(seat_ids)}")
 
     # part 2:
     my_seat_id = post_main(seat_ids, example_input)
-    print(f'My seat ID is {my_seat_id}')
+    print(f"My seat ID is {my_seat_id}")

@@ -3,12 +3,12 @@ import time
 from more_itertools import locate
 
 
-def get_data(filepath: str = './data/raw/dat2_sample.txt'):
+def get_data(filepath: str = "./data/raw/dat2_sample.txt"):
     data = []
-    with open(filepath, 'r') as f:
+    with open(filepath, "r") as f:
         lines = f.readlines()
         for line in lines:
-            data.append(line.replace('\n', ''))
+            data.append(line.replace("\n", ""))
     return data
 
 
@@ -23,8 +23,9 @@ def extract_vars(_input: str) -> tuple:
         is obviously the password to check
     :return: f, c, l, password
     """
-    x = list(' '.join(' '.join(_input.split('-')).split(':')
-                      ).replace('  ', ' ').split(' '))
+    x = list(
+        " ".join(" ".join(_input.split("-")).split(":")).replace("  ", " ").split(" ")
+    )
     x[0] = int(x[0])
     x[1] = int(x[1])
     return tuple(x)
@@ -44,10 +45,11 @@ def extract_vars_pt2(_input: str) -> tuple:
          be satisfied) and <password> is obviously the password to check
     :return: x0, x1, l, password
     """
-    x = list(' '.join(' '.join(_input.split('-')).split(':')
-                      ).replace('  ', ' ').split(' '))
-    x[0] = int(x[0])-1
-    x[1] = int(x[1])-1
+    x = list(
+        " ".join(" ".join(_input.split("-")).split(":")).replace("  ", " ").split(" ")
+    )
+    x[0] = int(x[0]) - 1
+    x[1] = int(x[1]) - 1
     return tuple(x)
 
 
@@ -79,12 +81,12 @@ def check_validity2(_input) -> bool:
     return bool(x0 in indices) ^ bool(x1 in indices)
 
 
-def main(filepath: str = './data/raw/day2_sample.txt', mp=False, _map=False):
-    print('Start solution 1')
+def main(filepath: str = "./data/raw/day2_sample.txt", mp=False, _map=False):
+    print("Start solution 1")
     start = time.time()
     inputs = get_data(filepath)
     elapsed_inputs = time.time() - start
-    print(f'Time for data prep: {elapsed_inputs}')
+    print(f"Time for data prep: {elapsed_inputs}")
     if mp:  # time to multiprocess is 0.15400099754333496 seconds
         with Pool() as pool:
             res = pool.map(check_validity, inputs)
@@ -98,36 +100,36 @@ def main(filepath: str = './data/raw/day2_sample.txt', mp=False, _map=False):
             res.append(check_validity(x))
     elapsed_total = time.time() - start
     ans = sum(res)
-    print(f'Number of valid passwords: {ans}')
-    print(f'Solution 1 time with MP = {mp} and _map = {_map} was: {elapsed_total}\n')
+    print(f"Number of valid passwords: {ans}")
+    print(f"Solution 1 time with MP = {mp} and _map = {_map} was: {elapsed_total}\n")
     return ans
 
 
-def main2(filepath: str = './data/raw/day2_sample.txt'):
-    print('Start solution 2')
+def main2(filepath: str = "./data/raw/day2_sample.txt"):
+    print("Start solution 2")
     start = time.time()
     inputs = get_data(filepath)
     elapsed_inputs = time.time() - start
-    print(f'Time for data prep: {elapsed_inputs}')
+    print(f"Time for data prep: {elapsed_inputs}")
 
     res = map(check_validity2, inputs)
     ans = sum(res)
-    print(f'Number of valid passwords for problem 2: {ans}')
+    print(f"Number of valid passwords for problem 2: {ans}")
     elapsed_total = time.time() - start
-    print(f'Solution 2 time was: {elapsed_total}\n')
+    print(f"Solution 2 time was: {elapsed_total}\n")
     return ans
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     meta_start = time.time()
     # solution 1
     # main('./data/raw/day2_input.txt', mp=True, _map=False)
 
-    main('./data/raw/day2_input.txt', mp=False, _map=True)
+    main("./data/raw/day2_input.txt", mp=False, _map=True)
 
     # main('./data/raw/day2_input.txt', mp=False, _map=False)
 
     # solution 2
-    main2('./data/raw/day2_input.txt')
+    main2("./data/raw/day2_input.txt")
     meta_elapsed = time.time() - meta_start
-    print(f'Total time was {meta_elapsed}')
+    print(f"Total time was {meta_elapsed}")

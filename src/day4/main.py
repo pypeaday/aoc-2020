@@ -3,57 +3,63 @@ from cerberus import Validator
 
 # cerberus validator defined here because we can't add coercion via a YAML file
 VALIDATION_SCHEMA = {
-    'ecl':
-        {'required': True,
-         'type': 'string',
-         'allowed': ['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth']},
-    'pid':
-        {'required': True,
-         'type': 'string',
-         'minlength': 9,
-         'maxlength': 9, },
-    'eyr':
-        {'required': True,
-         'type': 'integer',
-         'min': 2020,
-         'max': 2030,
-         'coerce': int},
-    'hcl':
-        {'required': True,
-         'type': 'string',
-         'regex': "^#[a-z0-9]{6}", },
-    'byr':
-        {'required': True,
-         'type': 'integer',
-         'min': 1920,
-         'max': 2002,
-         'coerce': int},
-    'iyr':
-        {'required': True,
-         'type': 'integer',
-         'min': 2010,
-         'max': 2020,
-         'coerce': int},
-    'hgt':
-        {'required': True,
-         'regex': "^([0-9]{2,3})(cm|in)", },
-    'cid':
-        {'required': False}
+    "ecl": {
+        "required": True,
+        "type": "string",
+        "allowed": ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"],
+    },
+    "pid": {
+        "required": True,
+        "type": "string",
+        "minlength": 9,
+        "maxlength": 9,
+    },
+    "eyr": {
+        "required": True,
+        "type": "integer",
+        "min": 2020,
+        "max": 2030,
+        "coerce": int,
+    },
+    "hcl": {
+        "required": True,
+        "type": "string",
+        "regex": "^#[a-z0-9]{6}",
+    },
+    "byr": {
+        "required": True,
+        "type": "integer",
+        "min": 1920,
+        "max": 2002,
+        "coerce": int,
+    },
+    "iyr": {
+        "required": True,
+        "type": "integer",
+        "min": 2010,
+        "max": 2020,
+        "coerce": int,
+    },
+    "hgt": {
+        "required": True,
+        "regex": "^([0-9]{2,3})(cm|in)",
+    },
+    "cid": {"required": False},
 }
 
 
-def get_data(filepath: str = './data/raw/day4_sample.txt'):
+def get_data(filepath: str = "./data/raw/day4_sample.txt"):
     inputs = []
-    with open(filepath, 'r') as f:
+    with open(filepath, "r") as f:
         lines = f.readlines()
-        _data = ''
+        _data = ""
         for line in lines:
-            if line == '\n':
+            if line == "\n":
                 inputs.append(_data.strip())
-                _data = ''
+                _data = ""
             else:
-                _data += line.replace('\n', ' ')
-        if _data != '':
+                _data += line.replace("\n", " ")
+        if _data != "":
             inputs.append(_data.strip())
 
     return inputs
@@ -80,10 +86,10 @@ def format_data(inputs: list) -> list:
     """
     res = []
     for _input in inputs:
-        toks = _input.split(' ')
+        toks = _input.split(" ")
         _d = dict()
         for x in toks:
-            k, v = x.split(':')
+            k, v = x.split(":")
             _d[k] = v
         res.append(_d)
     return res
@@ -98,14 +104,15 @@ def check_height(height: str) -> bool:
     """
     val = int(height[:-2])
     meas = height[-2:]
-    if meas == 'cm':
+    if meas == "cm":
         return 150 <= val <= 193
     else:
         return 59 <= val <= 76
 
 
-def is_passport_valid(_input: dict,
-                      validation_schema: Union[dict, None] = None) -> bool:
+def is_passport_valid(
+    _input: dict, validation_schema: Union[dict, None] = None
+) -> bool:
     """
     Checks the formatted passport input to determine if it
     is valid or not
@@ -129,7 +136,7 @@ def is_passport_valid(_input: dict,
     """
     if not validation_schema:
         _keys = set(_input.keys())
-        required_keys = {'ecl', 'pid', 'eyr', 'hcl', 'byr', 'iyr', 'hgt'}
+        required_keys = {"ecl", "pid", "eyr", "hcl", "byr", "iyr", "hgt"}
         if required_keys - _keys == set():
             return True
         else:
@@ -138,12 +145,12 @@ def is_passport_valid(_input: dict,
         # part 2 solution with data validation here
         v = Validator(validation_schema)
         if v.validate(_input):
-            return check_height(_input['hgt'])
+            return check_height(_input["hgt"])
         else:
             return False
 
 
-def main(filepath: str = './data/raw/day4_sample.txt', part2: bool = False) -> int:
+def main(filepath: str = "./data/raw/day4_sample.txt", part2: bool = False) -> int:
     inputs = get_data(filepath)
     formatted_inputs = format_data(inputs)
 
@@ -153,16 +160,20 @@ def main(filepath: str = './data/raw/day4_sample.txt', part2: bool = False) -> i
         # with open('./src/day4/schema.yaml', 'r') as y:
         #     validation_schema = yaml.load(y, Loader=yaml.FullLoader)
 
-        res = map(is_passport_valid, formatted_inputs, [VALIDATION_SCHEMA for _ in range(len(inputs))])
+        res = map(
+            is_passport_valid,
+            formatted_inputs,
+            [VALIDATION_SCHEMA for _ in range(len(inputs))],
+        )
 
     num_valid = sum(res)
-    print(f'Number of valid passports is {num_valid}')
+    print(f"Number of valid passports is {num_valid}")
     return num_valid
 
 
-if __name__ == '__main__':
-    filepath = './data/raw/day4_input.txt'
-    print('Solution for Part 1')
+if __name__ == "__main__":
+    filepath = "./data/raw/day4_input.txt"
+    print("Solution for Part 1")
     main(filepath)
-    print('Solution for Part 2')
+    print("Solution for Part 2")
     main(filepath, True)

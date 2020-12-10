@@ -1,13 +1,11 @@
-import numpy as np
 from typing import Union
-import copy
-import itertools
-from more_itertools import windowed
+
+import numpy as np
 
 
-def get_data(filepath: str = './data/raw/day10_sample.txt'):
+def get_data(filepath: str = "./data/raw/day10_sample.txt"):
     data = []
-    with open(filepath, 'r') as f:
+    with open(filepath, "r") as f:
         lines = f.readlines()
         for line in lines:
             data.append(int(line))
@@ -21,7 +19,7 @@ def device_max_jolts(data: list) -> int:
         data (list): input data
 
     Returns:
-        int: max joltage of my device  
+        int: max joltage of my device
     """
     return max(data) + 3
 
@@ -77,16 +75,17 @@ def calculate_solution_1(diffs: list) -> int:
     return diffs.count(1) * diffs.count(3)
 
 
-def main(filepath: str = './data/raw/day10_sample.txt'):
+def main(filepath: str = "./data/raw/day10_sample.txt"):
 
     data = get_data(filepath)
     device_adapter_joltage = device_max_jolts(data)
     new_data = format_data(data, device_adapter_joltage)
     if determine_any_invalid_adapters(new_data):
-        raise SystemError('Invalid adapter sequence')
+        raise SystemError("Invalid adapter sequence")
     diffs = determine_all_joltage_differences(new_data)
     solution_1 = calculate_solution_1(diffs)
-    print(f'solution 1: {solution_1}')
+    print(f"solution 1: {solution_1}")
 
-if __name__ == '__main__':
-    main('./data/raw/day10_input.txt')
+
+if __name__ == "__main__":
+    main("./data/raw/day10_input.txt")

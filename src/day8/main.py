@@ -3,8 +3,11 @@ import copy
 
 
 class BootLoader:
-
-    def __init__(self, filepath: str = './data/raw/day8_sample.txt', instructions: Union[None, list] = None):
+    def __init__(
+        self,
+        filepath: str = "./data/raw/day8_sample.txt",
+        instructions: Union[None, list] = None,
+    ):
         if instructions is not None:
             self.instructions = instructions
         else:
@@ -16,20 +19,16 @@ class BootLoader:
         self.next_instruction_id = 0
         self.completed_instructions = []
 
-        self.instruction_map = {
-            'nop': self.nop,
-            'acc': self.acc,
-            'jmp': self.jmp
-        }
+        self.instruction_map = {"nop": self.nop, "acc": self.acc, "jmp": self.jmp}
 
     @staticmethod
     def get_instructions(filepath) -> list:
         _instructions = []
-        with open(filepath, 'r') as f:
+        with open(filepath, "r") as f:
             lines = f.readlines()
             for line in lines:
-                op = line.split(' ')[0]
-                val = int(line.split(' ')[1].replace('\n', ''))
+                op = line.split(" ")[0]
+                val = int(line.split(" ")[1].replace("\n", ""))
                 _instructions.append((op, val))
         return _instructions
 
@@ -53,16 +52,18 @@ class BootLoader:
             _func = self.instruction_map[_func_name]
             _func(val)
             if self.next_instruction_id in self.completed_instructions:
-                raise SystemError(f'Infinite loop detected on instruction id {self.next_instruction_id}. \n'
-                                  f'Current accumulator value is {self.accumulator}')
+                raise SystemError(
+                    f"Infinite loop detected on instruction id {self.next_instruction_id}. \n"
+                    f"Current accumulator value is {self.accumulator}"
+                )
             if self.next_instruction_id == len(self.instructions):
                 booting = False
             self.instruction_id = self.next_instruction_id
-        print('Sucessfully booted')
+        print("Sucessfully booted")
         return self.accumulator
 
 
-def get_raw_instructions(filepath: str = './data/raw/day8_sample.txt'):
+def get_raw_instructions(filepath: str = "./data/raw/day8_sample.txt"):
     return BootLoader.get_instructions(filepath)
 
 
@@ -74,33 +75,35 @@ def catch(error, default, instructions):
         return default
 
 
-def fix_instructions(filepath: str = './data/raw/day8_sample.txt'):
+def fix_instructions(filepath: str = "./data/raw/day8_sample.txt"):
     raw_instructions = BootLoader.get_instructions(filepath)
     instruction_list = []
     for i, inst in enumerate(raw_instructions):
         # make attempted instructions for changing one jmp to nop
-        if inst[0] == 'jmp':
+        if inst[0] == "jmp":
             new_instructions = copy.deepcopy(raw_instructions)
-            new_instructions[i] = ('nop', inst[1])
+            new_instructions[i] = ("nop", inst[1])
             instruction_list.append(new_instructions)
 
         # make attempted instructions for changing one nop to jmp
-        elif inst[0] == 'nop':
+        elif inst[0] == "nop":
             new_instructions = copy.deepcopy(raw_instructions)
-            new_instructions[i] = ('jmp', inst[1])
+            new_instructions[i] = ("jmp", inst[1])
             instruction_list.append(new_instructions)
 
-    res = map(catch,
-              [SystemError for _ in range(len(instruction_list))],
-              [None for _ in range(len(instruction_list))],
-              instruction_list)
+    res = map(
+        catch,
+        [SystemError for _ in range(len(instruction_list))],
+        [None for _ in range(len(instruction_list))],
+        instruction_list,
+    )
 
     return [x for x in res if x is not None]
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # solution 1
-    bootloader = BootLoader('./data/raw/day8_input.txt')
+    bootloader = BootLoader("./data/raw/day8_input.txt")
     try:
         bootloader.load()
     except SystemError:
@@ -108,5 +111,7 @@ if __name__ == '__main__':
 
     # solution 2
     # res =fix_instructions('./data/raw/day8_sample.txt')
-    res = fix_instructions('./data/raw/day8_input.txt')
-    print(f'Accumulator value with fixed instructions after successful boot is: {res[0]}')
+    res = fix_instructions("./data/raw/day8_input.txt")
+    print(
+        f"Accumulator value with fixed instructions after successful boot is: {res[0]}"
+    )

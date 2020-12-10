@@ -4,19 +4,19 @@ from src.day3.main import main, get_data, get_col_index, is_tree, check_row
 
 
 def test_get_data():
-    inputs = get_data('./data/raw/day3_sample.txt')
+    inputs = get_data("./data/raw/day3_sample.txt")
 
-    assert inputs[0] == '..##.......'
-    assert inputs[1] == '#...#...#..'
-    assert inputs[2] == '.#....#..#.'
-    assert inputs[3] == '..#.#...#.#'
-    assert inputs[4] == '.#...##..#.'
-    assert inputs[5] == '..#.##.....'
-    assert inputs[6] == '.#.#.#....#'
-    assert inputs[7] == '.#........#'
-    assert inputs[8] == '#.##...#...'
-    assert inputs[9] == '#...##....#'
-    assert inputs[10] == '.#..#...#.#'
+    assert inputs[0] == "..##......."
+    assert inputs[1] == "#...#...#.."
+    assert inputs[2] == ".#....#..#."
+    assert inputs[3] == "..#.#...#.#"
+    assert inputs[4] == ".#...##..#."
+    assert inputs[5] == "..#.##....."
+    assert inputs[6] == ".#.#.#....#"
+    assert inputs[7] == ".#........#"
+    assert inputs[8] == "#.##...#..."
+    assert inputs[9] == "#...##....#"
+    assert inputs[10] == ".#..#...#.#"
 
 
 def test_get_col_index():
@@ -27,16 +27,16 @@ def test_get_col_index():
 
 
 def test_is_tree():
-    ans = is_tree('.')
+    ans = is_tree(".")
     assert ans is False
-    ans = is_tree('#')
+    ans = is_tree("#")
     assert ans is True
     with pytest.raises(ValueError):
-        assert is_tree('x')
+        assert is_tree("x")
 
 
 def test_check_row():
-    inputs = get_data('./data/raw/day3_sample.txt')
+    inputs = get_data("./data/raw/day3_sample.txt")
     assert check_row(inputs[0], 0, 3, 1) is False
     assert check_row(inputs[1], 1, 3, 1) is False
     assert check_row(inputs[2], 2, 3, 1) is True
@@ -91,5 +91,3 @@ def test_check_row():
     assert check_row(inputs[6], 6, 1, 2) is True
     assert check_row(inputs[8], 7, 1, 2) is False
     assert check_row(inputs[10], 10, 1, 2) is False
-
-

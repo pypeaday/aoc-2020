@@ -4,8 +4,8 @@ from src.day9.main import get_data, is_valid, main, main2
 
 
 def test_get_data():
-    data = get_data('./data/raw/day9_sample.txt')
-    assert data[0] == 35 
+    data = get_data("./data/raw/day9_sample.txt")
+    assert data[0] == 35
     assert data[1] == 20
     assert data[2] == 15
     assert data[3] == 25
@@ -28,7 +28,7 @@ def test_get_data():
 
 
 def test_is_valid():
-    data = get_data('./data/raw/day9_sample.txt')
+    data = get_data("./data/raw/day9_sample.txt")
     assert is_valid(data[5], data[0:5]) is True
     assert is_valid(data[6], data[1:6]) is True
     assert is_valid(data[7], data[2:7]) is True
@@ -47,12 +47,12 @@ def test_is_valid():
 
 
 def test_main():
-    res, idx = main('./data/raw/day9_sample.txt', 5)
+    res, idx = main("./data/raw/day9_sample.txt", 5)
     assert res == 127
 
 
 def test_main2():
-    _ , idx = main('./data/raw/day9_sample.txt', 5)
-    res2 = main2('./data/raw/day9_sample.txt', 5, idx)
+    _, idx = main("./data/raw/day9_sample.txt", 5)
+    res2 = main2("./data/raw/day9_sample.txt", 5, idx)
     assert min(res2) == 15
     assert max(res2) == 47
