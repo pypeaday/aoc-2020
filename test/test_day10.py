@@ -1,12 +1,12 @@
 import pytest
-import os
 from src.day10.main import (
     calculate_solution_1,
     get_data,
-    device_max_jolts,
-    determine_any_invalid_adapters,
+    get_device_max_jolts,
+    determine_good_sequence,
     format_data,
     determine_all_joltage_differences,
+    calculate_solution_2,
 )
 
 
@@ -27,7 +27,7 @@ def test_get_data():
 
 def test_append_device_joltage_adapter():
     data = get_data("./data/raw/day10_sample.txt")
-    device_adapter_joltage = device_max_jolts(data)
+    device_adapter_joltage = get_device_max_jolts(data)
     new_data = format_data(data, device_adapter_joltage)
     assert new_data[-1] == device_adapter_joltage
     assert new_data[0] == 0
@@ -35,17 +35,29 @@ def test_append_device_joltage_adapter():
 
 def test_device_max_jolts():
     data = get_data()
-    assert device_max_jolts(data) == 22
+    assert get_device_max_jolts(data) == 22
 
 
-def test_determine_any_invalid_adapters():
+def test_determine_good_sequence():
     data = get_data("./data/raw/day10_sample.txt")
-    assert determine_any_invalid_adapters(data) is False
+    assert determine_good_sequence(data) is True
+
+    data = get_data("./data/raw/day10_sample2.txt")
+    assert determine_good_sequence(data, last_val=max(data)) is True
 
 
 def test_calculate_solution_1():
     data = get_data("./data/raw/day10_sample.txt")
-    device_adapter_joltage = device_max_jolts(data)
+    device_adapter_joltage = get_device_max_jolts(data)
     new_data = format_data(data, device_adapter_joltage)
     diffs = determine_all_joltage_differences(new_data)
-    assert calculate_solution_1(diffs) == 22
+    assert calculate_solution_1(diffs) == 35
+
+
+def test_calculate_solution_2():
+    data = get_data("./data/raw/day10_sample.txt")
+    sol2 = calculate_solution_2(data)
+    assert sol2 == 8
+    data = get_data("./data/raw/day10_sample2.txt")
+    sol2 = calculate_solution_2(data)
+    assert sol2 == 19208
