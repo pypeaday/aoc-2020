@@ -150,7 +150,9 @@ def is_passport_valid(
             return False
 
 
-def main(filepath: str = "./data/raw/day4_sample.txt", part2: bool = False) -> int:
+def main(
+    filepath: str = "./data/raw/day4_sample.txt", part2: bool = False
+) -> int:
     inputs = get_data(filepath)
     formatted_inputs = format_data(inputs)
 

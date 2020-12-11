@@ -87,7 +87,9 @@ def can_bag_be_carried(rules: dict, outer_bag: str, inner_bag: str) -> bool:
         return any(results)
 
 
-def main(filepath: str = "./data/raw/day7_sample.txt", my_bag: str = "shiny gold"):
+def main(
+    filepath: str = "./data/raw/day7_sample.txt", my_bag: str = "shiny gold"
+):
     rules = get_data(filepath)
     all_bags = [x for x in rules.keys()]
     results = map(
@@ -134,7 +136,9 @@ def count_bag_capacity(sums: dict, rules: dict, bag: str) -> int:
 if __name__ == "__main__":
     # solution 1
     res = main("./data/raw/day7_input.txt", "shiny gold")
-    print(f"Number of bags that can eventually hold my shiny gold bag are: {res}")
+    print(
+        f"Number of bags that can eventually hold my shiny gold bag are: {res}"
+    )
 
     # solution 2
     rules = get_data("./data/raw/day7_input.txt")

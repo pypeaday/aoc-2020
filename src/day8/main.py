@@ -19,7 +19,11 @@ class BootLoader:
         self.next_instruction_id = 0
         self.completed_instructions = []
 
-        self.instruction_map = {"nop": self.nop, "acc": self.acc, "jmp": self.jmp}
+        self.instruction_map = {
+            "nop": self.nop,
+            "acc": self.acc,
+            "jmp": self.jmp,
+        }
 
     @staticmethod
     def get_instructions(filepath) -> list:

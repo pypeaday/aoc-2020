@@ -125,7 +125,9 @@ def get_all_seat_ids(row_len: int = 7, col_len: int = 3) -> list:
     num_cols = get_number_indices(col_len)
     all_seat_coords = get_all_seat_coords(num_rows, num_cols)
     all_ids = map(
-        get_seat_id, [x[0] for x in all_seat_coords], [x[1] for x in all_seat_coords]
+        get_seat_id,
+        [x[0] for x in all_seat_coords],
+        [x[1] for x in all_seat_coords],
     )
     return list(all_ids)
 

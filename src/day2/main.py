@@ -24,7 +24,9 @@ def extract_vars(_input: str) -> tuple:
     :return: f, c, l, password
     """
     x = list(
-        " ".join(" ".join(_input.split("-")).split(":")).replace("  ", " ").split(" ")
+        " ".join(" ".join(_input.split("-")).split(":"))
+        .replace("  ", " ")
+        .split(" ")
     )
     x[0] = int(x[0])
     x[1] = int(x[1])
@@ -46,7 +48,9 @@ def extract_vars_pt2(_input: str) -> tuple:
     :return: x0, x1, l, password
     """
     x = list(
-        " ".join(" ".join(_input.split("-")).split(":")).replace("  ", " ").split(" ")
+        " ".join(" ".join(_input.split("-")).split(":"))
+        .replace("  ", " ")
+        .split(" ")
     )
     x[0] = int(x[0]) - 1
     x[1] = int(x[1]) - 1
@@ -101,7 +105,9 @@ def main(filepath: str = "./data/raw/day2_sample.txt", mp=False, _map=False):
     elapsed_total = time.time() - start
     ans = sum(res)
     print(f"Number of valid passwords: {ans}")
-    print(f"Solution 1 time with MP = {mp} and _map = {_map} was: {elapsed_total}\n")
+    print(
+        f"Solution 1 time with MP = {mp} and _map = {_map} was: {elapsed_total}\n"
+    )
     return ans
 
 

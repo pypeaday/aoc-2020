@@ -28,7 +28,9 @@ def is_valid(num_to_check: int, values: list, seq_len: int = 2) -> bool:
     return num_to_check in res
 
 
-def main(filepath: str = "./data/raw/day9_sample.txt", preamble_length: int = 5):
+def main(
+    filepath: str = "./data/raw/day9_sample.txt", preamble_length: int = 5
+):
     data = get_data(filepath)
     nums = data[preamble_length:]
     res = map(is_valid, nums, windowed(data, preamble_length))
@@ -51,7 +53,9 @@ def check_sum(seq: list, value: int) -> bool:
 
 
 def main2(
-    filepath: str = "./data/raw/day9_sample.txt", preamble_length: int = 5, idx: int = 0
+    filepath: str = "./data/raw/day9_sample.txt",
+    preamble_length: int = 5,
+    idx: int = 0,
 ):
     """Solution 2 for day 9
 

@@ -36,7 +36,9 @@ def is_tree(_input: str) -> bool:
     return _input == "#"
 
 
-def check_row(row: str, row_id: int, delta_x: int = 3, delta_y: int = 1) -> bool:
+def check_row(
+    row: str, row_id: int, delta_x: int = 3, delta_y: int = 1
+) -> bool:
     """
     For part 1 this takes one  row of the map and returns
     whether or not the coordinate in that row is a tree
@@ -61,7 +63,9 @@ def check_row(row: str, row_id: int, delta_x: int = 3, delta_y: int = 1) -> bool
 
 
 def main(
-    filepath: str = "./data/raw/day3_sample.txt", delta_x: int = 3, delta_y: int = 1
+    filepath: str = "./data/raw/day3_sample.txt",
+    delta_x: int = 3,
+    delta_y: int = 1,
 ):
     inputs = get_data(filepath)
     ids = range(len(inputs))

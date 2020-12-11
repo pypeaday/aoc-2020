@@ -15,7 +15,9 @@ def find_sum(ls: list, p: int, k: int) -> list:
     return [tup for tup in combinations(ls, p) if sum(tup) == k]
 
 
-def main(filepath: str = "./data/raw/day1_sample.txt", p: int = 2, k: int = 2020):
+def main(
+    filepath: str = "./data/raw/day1_sample.txt", p: int = 2, k: int = 2020
+):
     _input_list = get_data(filepath)
     results = find_sum(_input_list, p, k)
     res = results[0]

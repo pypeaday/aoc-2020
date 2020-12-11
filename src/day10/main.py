@@ -24,7 +24,9 @@ def get_device_max_jolts(data: list) -> int:
     return max(data) + 3
 
 
-def determine_good_sequence(data: list, max_diff: int = 3, last_val: int = 19) -> bool:
+def determine_good_sequence(
+    data: list, max_diff: int = 3, last_val: int = 19
+) -> bool:
     """Find if there are any invalid adapters in the list of data
 
     Args:
