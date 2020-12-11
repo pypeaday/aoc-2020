@@ -88,7 +88,7 @@ def decode_id(_input: str) -> int:
     return seats[0]
 
 
-def main(filepath: str = "./data/raw/day5_sample.txt") -> Tuple(list, tuple):
+def main(filepath: str = "./data/raw/day5_sample.txt") -> Tuple[list, tuple]:
     inputs = get_data(filepath)
     data = split_data(inputs, 7, 3)
     # get all row ids
