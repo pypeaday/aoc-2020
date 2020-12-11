@@ -32,7 +32,8 @@ def determine_good_sequence(
     Args:
         data (list): input data
         max_diff (int): maximum joltage difference between adapters
-        last_val (int): required last value of the sequence (necessary for part 2)
+        last_val (int): required last value of the sequence (necessary for
+                        part 2)
 
     Returns:
         bool: True/False
@@ -42,10 +43,12 @@ def determine_good_sequence(
 
 
 def determine_all_joltage_differences(data: list) -> list:
-    """returns the joltage differences between all adapters used in the valid sequence
+    """returns the joltage differences between all adapters used in the valid
+    sequence
 
     Args:
-        data (list): input data with the device's built-in joltage adapter appended
+        data (list): input data with the device's built-in joltage adapter
+        appended
 
     Returns:
         list: list of joltage differences
@@ -67,7 +70,8 @@ def format_data(data: list, device_adapter_joltage: int):
 
 
 def calculate_solution_1(diffs: list) -> int:
-    """Return the product of the number of 1 joltage differences between adapter with the number of 3 joltage differences between adapters
+    """Return the product of the number of 1 joltage differences between
+        adapter with the number of 3 joltage differences between adapters
 
     Args:
         diffs (list): list of joltage differences between adapters
@@ -81,7 +85,9 @@ def calculate_solution_1(diffs: list) -> int:
 def calculate_solution_2(data: list):
     data_plus = format_data(data, get_device_max_jolts(data))
     solution_map = defaultdict(int)
-    # The sum of all the ways to get to any given adapter is the sum of all the ways to get to every adapter within 3 jolts of it so we can build a solution map with a simple for loop
+    # The sum of all the ways to get to any given adapter is the sum of all
+    #  the ways to get to every adapter within 3 jolts of it so we can build
+    # a solution map with a simple for loop
     solution_map[0] = 1
     for jolt in data_plus:
         if jolt - 1 in solution_map:
