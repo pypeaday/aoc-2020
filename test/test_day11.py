@@ -1,5 +1,4 @@
-import pytest
-from src.day11.main import Lobby, calculate_solution_1
+from src.day11.main import Lobby, calculate_solution_1, calculate_solution_2
 
 
 def test_Lobby_init():
@@ -83,3 +82,7 @@ def test_Lobby_algorithm():
 
 def test_calculate_solution_1():
     assert calculate_solution_1("./data/raw/day11_sample.txt") == 37
+
+
+def test_calculate_solution_2():
+    assert calculate_solution_2("./data/raw/day11_sample.txt.") == 26
