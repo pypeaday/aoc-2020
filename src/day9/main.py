@@ -1,5 +1,3 @@
-from typing import Union
-import copy
 import itertools
 from more_itertools import windowed
 
@@ -14,7 +12,8 @@ def get_data(filepath: str = "./data/raw/day9_sample.txt"):
 
 
 def is_valid(num_to_check: int, values: list, seq_len: int = 2) -> bool:
-    """function to check is num_to_check is the sum of any 2 numbers, without replacement, in values
+    """function to check is num_to_check is the sum of any 2 numbers, without
+    replacement, in values
 
     Args:
         num_to_check (int): input number to check
@@ -62,7 +61,8 @@ def main2(
     Args:
         filepath (str, optional):  Defaults to './data/raw/day9_sample.txt'.
         preamble_length (int, optional):  Defaults to 5.
-        idx (int, optional): The id of the invalid number from main(). Defaults to 0.
+        idx (int, optional): The id of the invalid number from main().
+        Defaults to 0.
     """
 
     data = get_data(filepath)
