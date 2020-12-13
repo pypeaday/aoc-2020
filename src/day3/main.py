@@ -91,7 +91,7 @@ if __name__ == "__main__":
 
     # part 2
     print("Starting solution for part 2")
-    algorithm_config = get_data("./src/day3/algorithm_config.txt")
+    algorithm_config = get_data("./data/internal/day3_algorithm_config.txt")
     solution2_results = []
     for algo in algorithm_config:
         delta_x = int(algo.split(",")[0])
