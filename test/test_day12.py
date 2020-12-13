@@ -1,5 +1,5 @@
 import pytest
-from src.day12.main import Ship
+from src.day12.main import Ship, ShipWithWaypoint
 
 
 def test_get_instructions():
@@ -43,3 +43,18 @@ def test_manhattan_distance():
     ship = Ship("./data/raw/day12_sample.txt", orientation="E")
     ship.carry_out_instructions()
     assert ship.manhattan_distance() == 25
+
+
+def test_move_waypoint():
+    ship = ShipWithWaypoint("./data/raw/day12_sample.txt", "E")
+    ship.move_waypoint("R90")
+    assert ship.relative_waypoint_position["E"] == 1
+    assert ship.relative_waypoint_position["S"] == 10
+    assert ship.relative_waypoint_position["W"] == 0
+    assert ship.relative_waypoint_position["N"] == 0
+
+
+def test_calculate_solution_2():
+    ship = ShipWithWaypoint("./data/raw/day12_sample.txt", "E")
+    ship.carry_out_instructions()
+    assert ship.manhattan_distance() == 286
