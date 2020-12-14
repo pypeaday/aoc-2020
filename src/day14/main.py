@@ -1,3 +1,8 @@
+import copy
+from typing import Union
+import itertools
+
+
 def get_data(filepath: str = "./data/raw/day14_sample.txt"):
     """Loads data for day 14 and returns list of formatted inputs
 
@@ -54,11 +59,11 @@ def get_data(filepath: str = "./data/raw/day14_sample.txt"):
     return data[1:]  # start at 1 because id 0 is ['X'*36, {}]
 
 
-def transform_integer(value: str) -> str:
+def int236bitbin(value: Union[int, str]) -> str:
     return format(int(value), "036b")
 
 
-def apply_mask(mask: str, value: str) -> int:
+def apply_mask(mask: str, value: str) -> str:
     """apply a given 36-bit mask to an integer
 
 
@@ -68,16 +73,83 @@ def apply_mask(mask: str, value: str) -> int:
             note the integer is in str format
 
     Returns:
-        int: [description]
+        str: 36 bit value representation
     """
-    integer = transform_integer(value)
+    integer = int236bitbin(value)
     res = ""
     for m, i in zip(mask, integer):
         if m.lower() == "x":
             res += i
         else:
             res += m
-    return int(res, 2)
+    return res
+
+
+def bin2int(value: str) -> int:
+    return int(value, 2)
+
+
+def apply_floating_mask(mask: str, address: int) -> str:
+    """Aply 36 bit mask according to part 2 rules
+
+    Args:
+        mask (str): 36 bit mask
+        address (int): integer address
+
+    Returns:
+        str: floating address
+    """
+    encoded_address = int236bitbin(address)
+    res = ""
+    for m, i in zip(mask, encoded_address):
+        if m == "0":
+            res += i
+        elif m == "1":
+            res += "1"
+        elif m.upper() == "X":
+            res += "X"
+    return res
+
+
+def decode_floating_address(floating_address: str) -> list:
+    """return all possible addresses based on floating
+        address input
+
+    Args:
+        floating_address (str): 36 bit floating address
+            note: result of apply_floating_mask()
+
+    Returns:
+        list: list of possible addresses
+    """
+    num_floats = floating_address.count("X")
+    combos = itertools.product("01", repeat=num_floats)
+    decoded_addresses = []
+    for combo in combos:
+        new_addr = copy.copy(floating_address)
+        for v in combo:
+            new_addr = new_addr.replace("X", v, 1)
+        decoded_addresses.append(new_addr)
+    return decoded_addresses
+
+
+def apply_mask_v2(mask: str, address: int, value: str) -> dict:
+    """apply a given 36-bit mask to a memory address and
+    write the value to the resulting decoded addressed
+
+    Args:
+        mask (str): 36-bit mask
+        address (int): memory address to decode
+        value (str): value to write to addresses
+
+    Returns:
+        dict: dict of decoded memory addresses valued by value,
+        keyed by the integer representation of the binary address
+    """
+    floating_address = apply_floating_mask(mask, address)
+    keys = decode_floating_address(floating_address)
+    res = {bin2int(k): int(value) for k in keys}
+    return res
 
 
 def calculate_solution_1(filepath: str = "./data/raw/day14_sample.txt"):
@@ -86,20 +158,27 @@ def calculate_solution_1(filepath: str = "./data/raw/day14_sample.txt"):
     for ls in data:
         mask, addr_map = ls[0], ls[1]
         for k, v in addr_map.items():
-            solution_map[k] = apply_mask(mask, v)
+            solution_map[k] = bin2int(apply_mask(mask, v))
 
     return sum(v for v in solution_map.values())
 
 
-def calculate_solution_2(filepath: str = "./data/raw/day14_sample.txt"):
-    pass
+def calculate_solution_2(filepath: str = "./data/raw/day14_sample2.txt"):
+    data = get_data(filepath)
+    solution_map = dict()
+    for ls in data:
+        mask, addr_map = ls[0], ls[1]
+        for k, v in addr_map.items():
+            res = apply_mask_v2(mask, k, v)
+            solution_map.update(res)
+    return sum(v for v in solution_map.values())
 
 
-def main(filepath: str = "./data/raw/day13_sample.txt."):
+def main(filepath: str = "./data/raw/day14_sample.txt."):
     sol_1 = calculate_solution_1(filepath)
     print(f"Solution 1: {sol_1}")
 
-    sol_2 = calculate_solution_2(filepath)
+    sol_2 = calculate_solution_2(filepath.replace("sample", "sample2"))
     print(f"Solution 2: {sol_2}")
 
 
