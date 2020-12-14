@@ -59,12 +59,12 @@ def transform_integer(value: str) -> str:
 
 
 def apply_mask(mask: str, value: str) -> int:
-    """apply a given 32-bit mask to an integer
+    """apply a given 36-bit mask to an integer
 
 
     Args:
-        mask (str): 32 bit mask of X, 0, 1
-        value (str): integer to be expanded into 32 bits
+        mask (str): 36 bit mask of X, 0, 1
+        value (str): integer to be expanded into 36 bits
             note the integer is in str format
 
     Returns:
