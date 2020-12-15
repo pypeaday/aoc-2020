@@ -57,4 +57,5 @@ def test_calculate_solution_1():
 
 
 def test_calculate_solution_2():
-    assert calculate_solution_2() == 208
+    data = get_data()
+    assert calculate_solution_2(data) == 175594

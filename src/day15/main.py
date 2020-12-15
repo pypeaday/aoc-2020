@@ -1,3 +1,4 @@
+from tqdm import tqdm
 from collections import defaultdict
 
 
@@ -71,8 +72,13 @@ def calculate_solution_1(data: list):
     return turn_map[2020]
 
 
-def calculate_solution_2(filepath: str = "./data/raw/day15_sample2.txt"):
-    pass
+def calculate_solution_2(data: list):
+    turn_map, value_map = instantiate_maps(data)
+    turn_id = len(data) + 1
+    for i in tqdm(range(turn_id, 30000001)):
+        turn_map, value_map = take_turn(turn_map, value_map, i)
+
+    return turn_map[30000000]
 
 
 def main(filepath: str = "./data/raw/day15_sample.txt."):
@@ -80,7 +86,7 @@ def main(filepath: str = "./data/raw/day15_sample.txt."):
     sol_1 = calculate_solution_1(data)
     print(f"Solution 1: {sol_1}")
 
-    sol_2 = calculate_solution_2(filepath.replace("sample", "sample2"))
+    sol_2 = calculate_solution_2(data)
     print(f"Solution 2: {sol_2}")
 
 
