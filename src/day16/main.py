@@ -56,6 +56,24 @@ def get_any_possible_values(fields: dict) -> list:
     return list(vals)
 
 
+def get_valid_tickets(tickets: list, possible_values: set) -> list:
+    valid_tickets = []
+    for ticket in tickets:
+        diff = set(ticket) - possible_values
+        if diff == set():
+            valid_tickets.append(ticket)
+    return valid_tickets
+
+
+def get_possible_index(fields: dict, ticket: list):
+    field_index = defaultdict(list)
+    for i, val in enumerate(ticket):
+        for k, ls in fields.items():
+            if val in ls:
+                field_index[k].append(i)
+    return field_index
+
+
 def calculate_solution_1(fields: dict, tickets: list):
     invalid_tickets = 0
     invalid_values = list()
@@ -71,8 +89,40 @@ def calculate_solution_1(fields: dict, tickets: list):
     return sum(invalid_values)
 
 
-def calculate_solution_2(data: list):
-    pass
+def calculate_solution_2(fields: dict, tickets: list):
+    possible_values = set(get_any_possible_values(fields))
+    valid_tickets = get_valid_tickets(tickets, possible_values)
+    vals = set([x for x in range(len(valid_tickets[0]))])
+    field_indices = {k: vals for k in fields.keys()}
+    res = map(
+        get_possible_index,
+        [fields for _ in range(len(valid_tickets))],
+        valid_tickets,
+    )
+    for r in res:
+        for k, ls in r.items():
+            field_indices[k] = field_indices[k].intersection(set(ls))
+    # loop over ordered field indicies keys by length of values
+    sorted_field_indices = {
+        k: field_indices[k]
+        for k in sorted(field_indices, key=lambda k: len(field_indices[k]))
+    }
+    actual_field_indices = dict()
+    used_indices = set()
+    for k, v in sorted_field_indices.items():
+        values = set(v) - used_indices
+        if len(values) > 1:
+            raise ValueError(
+                "problem in that there is multiple possible values yet for a key"
+            )
+        val = list(values)[0]
+        actual_field_indices[k] = val
+        used_indices.add(val)
+    prod = 1
+    indices = [v for k, v in actual_field_indices.items() if "departure" in k]
+    for i in indices:
+        prod *= valid_tickets[0][i]
+    return prod
 
 
 def main(filepath: str = "./data/raw/day16_sample.txt."):
@@ -80,8 +130,8 @@ def main(filepath: str = "./data/raw/day16_sample.txt."):
     sol_1 = calculate_solution_1(fields, tickets)
     print(f"Solution 1: {sol_1}")
 
-    # sol_2 = calculate_solution_2(data)
-    # print(f"Solution 2: {sol_2}")
+    sol_2 = calculate_solution_2(fields, tickets)
+    print(f"Solution 2: {sol_2}")
 
 
 if __name__ == "__main__":
